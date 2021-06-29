@@ -1,5 +1,5 @@
-import store from '@/store';
-import { Log, LogType } from './log';
+const store = require('../store/index2');
+const { Log, LogType } = require('./log');
 const EventName =  {
     CLICK: 'click',
 }
@@ -13,7 +13,7 @@ class DOMEventLog extends Log {
 
 function clickHandle(event) {
     const log = new DOMEventLog('元素事件触发', EventName.CLICK, event.target);
-    store.commit('appendLogs', {log, type: LogType.EventLog});
+    store.appendLogs({log, type: LogType.EventLog});
 }
 
 function init() {

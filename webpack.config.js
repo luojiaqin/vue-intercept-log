@@ -25,6 +25,11 @@ module.exports = {
                 'vue-style-loader',
                 'css-loader'
             ]
+        },{
+            exclude: /src/,
+            use: {
+                loader: 'babel-loader'
+            }
         }]
     }
 }

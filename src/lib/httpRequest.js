@@ -1,5 +1,5 @@
-import store from '@/store';
-import { Log, LogType } from './log';
+const store = require('../store/index2');
+const { Log, LogType } = require('./log');
 
 
 class HttpRequest extends Log {
@@ -45,10 +45,10 @@ function initXMLHttpRequest() {
                 // 请求后拦截
                 httpLog.setResponse(JSON.stringify({config, response: this.response}));
                 if (this.status) {
-                    store.commit('appendLogs', {log: httpLog, type: LogType.HttpRequest});
+                    store.appendLogs({log: httpLog, type: LogType.HttpRequest});
                 } else {
                     httpLog.setLogType(LogType.ErrorHttpRequest);
-                    store.commit('appendLogs', {log: httpLog, type: LogType.ErrorHttpRequest});
+                    store.appendLogs({log: httpLog, type: LogType.ErrorHttpRequest});
                 }
 
 

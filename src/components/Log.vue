@@ -50,8 +50,7 @@
   </div>
 </template>
 <script>
-import {LogType } from '@/lib/log'
-import { mapState } from 'vuex'
+import {LogType } from '../lib/log'
 import Box from './Box.vue'
 export default {
   created(){
@@ -60,8 +59,12 @@ export default {
   components: {
     Box
   },
+  data(){
+    return {
+      logs: require('../store/index2').logs
+    }
+  },
   computed: {
-    ...mapState(['logs']),
     consoleLog(){
       return this.logs[LogType.Console]
     },
@@ -75,7 +78,7 @@ export default {
       return this.logs[LogType.ErrorHttpRequest]
     },
     eventLog(){
-      return this.logs[LogType.Event]
+      return this.logs[LogType.EventLog]
     }
   },
   methods: {

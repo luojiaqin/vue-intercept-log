@@ -1,4 +1,4 @@
-export class Log {
+class Log {
     constructor(con, logType) {
         this.createTime = new Date().toLocaleString();
         this.logType = logType;
@@ -11,10 +11,14 @@ export class Log {
     }
 }
 
-export const LogType = {
+const LogType = {
     Console: 'console',
     ErrorConsole: 'errorConsole',
     HttpRequest: 'httpRequest',
     ErrorHttpRequest: 'errorHttpRequest',
     EventLog: 'event',
+}
+module.exports = {
+    Log,
+    LogType
 }

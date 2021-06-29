@@ -1,5 +1,5 @@
-import { Log, LogType } from './log';
-import store from '@/store';
+const { Log, LogType } = require('./log');
+const store = require('../store/index2');
 
 function consoleLog() {
     let log = null;
@@ -12,25 +12,25 @@ function consoleLog() {
         }
         log = new Log(contentGroup);
     }
-    store.commit('appendLogs', {log, type: LogType.Console});
+    store.appendLogs({log, type: LogType.Console});
 }
 
 function consoleError(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
         const log = new Log(errorMessage, LogType.ErrorConsole);
-        store.commit('appendLogs', {log, type: LogType.ErrorConsole});
+        store.appendLogs({log, type: LogType.ErrorConsole});
 }
 
 
 function vueError(error, vm, info) {
     const log = new Log(info, LogType.ErrorConsole);
-    store.commit('appendLogs', {log, type: LogType.ErrorConsole});
+    store.appendLogs({log, type: LogType.ErrorConsole});
 }
 
 
 function init() {
     window.console.log = consoleLog;
     window.onerror = consoleError;
-    const outerVue = store.state.outerVue;
+    const outerVue = store.outerVue;
     outerVue.config.errorHandler = vueError;
 }
 
