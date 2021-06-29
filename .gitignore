@@ -1,0 +1,9 @@
+node_modules
+dist
+.idea
+.vscode
+.npmrc
+coverage
+waiter.config.js
+build/bin/algolia-key.js
+.envrc

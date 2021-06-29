@@ -1,6 +1,7 @@
 {
   "name": "vue-intercept-log",
-  "version": "1.0.3",
+  "version": "1.0.6",
+  "main": "dist/vue-intercept-log.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "webpack",
