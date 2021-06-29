@@ -1,28 +1,21 @@
 import store from '@/store';
-import { Vue } from 'vue-property-decorator';
-import consolePlatform from '@/core/consolePlatform';
-import domEvent from '@/core/domEvent';
-import httpRequest from '@/core/httpRequest';
-interface Params {
-    router: any; // 路由
-    routePath?: string;
-    isDefaultRecord: false; // 是否开启默认记录
-}
-
+const consolePlatform = require('./consolePlatform');
+const domEvent =  require('./domEvent');
+const httpRequest = require('./httpRequest');
 const plugin = {
-    install(vue: any, params: Params) {
-        store.commit('setOuterVue', Vue);
+    install(vue, params) {
+        store.commit('setOuterVue', vue);
         store.commit('setRouter', params.router);
         this.init(params);
     },
-    init(params: Params) {
+    init(params) {
         const {router, isDefaultRecord} = params;
         let {routePath} = params;
-        routePath ??= '/vue-log';
+        routePath = routePath || '/vue-log';
         router.addRoutes([{
             path: routePath,
             name: routePath,
-            component: () => import('@/components/Log.vue'),
+            component: () => import('../components/Log.vue'),
         }]);
         // new Navigator(navigator.userAgent);
 
@@ -42,5 +35,9 @@ const plugin = {
 
     },
 };
+
+// if(typeof window !== 'undefined' && window.Vue){
+    // plugin.install(window.Vue)
+// }
 
 export default plugin;

@@ -35,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/lib/navigator.js", "src/lib/log.js", "src/lib/install.js", "src/lib/consolePlatform.js", "src/lib/domEvent.js", "src/lib/httpRequest.js", "src/index.js", "src/store/index.js"  ],
   "exclude": [
     "node_modules"
   ]

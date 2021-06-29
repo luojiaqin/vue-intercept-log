@@ -1,22 +1,6 @@
-import { Log, LogType } from '@/core/log';
-// import Vue from 'vue';
-import Vuex from 'vuex';
-import {Vue} from 'vue-property-decorator';
+import { Log, LogType } from '@/lib/log';
+import Vuex from 'vuex'
 
-
-Vue.use(Vuex);
-interface Logs {
-  [LogType.Console]: Log[];
-  [LogType.ErrorConsole]: Log[];
-  [LogType.ErrorHttpRequest]: Log[];
-  [LogType.HttpRequest]: Log[];
-  [LogType.Event]: Log[];
-}
-interface StoreVal {
-  outerVue: Vue;
-  router: any;
-  logs: Logs;
-}
 
 export default new Vuex.Store({
   state: {
@@ -28,7 +12,7 @@ export default new Vuex.Store({
       [LogType.ErrorHttpRequest]: [],
       [LogType.HttpRequest]: [],
       [LogType.Event]: [],
-    } as Logs,
+    },
   },
   mutations: {
     setOuterVue(state, outerVue) {
@@ -39,7 +23,7 @@ export default new Vuex.Store({
     },
     appendLogs(state, {log, type}) {
       const logs = state.logs;
-      const typeLogs = logs[type as LogType];
+      const typeLogs = logs[type];
       if (typeof log === 'object') {
         typeLogs.push(log);
       } else if (log.constructor === Array) {

@@ -1,12 +1,12 @@
 import { Log, LogType } from './log';
 import store from '@/store';
 
-function consoleLog(): any {
+function consoleLog() {
     let log = null;
     if (arguments.length === 1) {
         log = new Log(JSON.stringify(arguments[0]));
     } else {
-        const contentGroup: string[] = [];
+        const contentGroup = [];
         for (let i = 0; i < arguments.length; i++) {
             contentGroup.push(JSON.stringify(arguments[i]));
         }
@@ -15,13 +15,13 @@ function consoleLog(): any {
     store.commit('appendLogs', {log, type: LogType.Console});
 }
 
-function consoleError(errorMessage: any, scriptURI: any, lineNumber: any, columnNumber: any, errorObj: any) {
+function consoleError(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
         const log = new Log(errorMessage, LogType.ErrorConsole);
         store.commit('appendLogs', {log, type: LogType.ErrorConsole});
 }
 
 
-function vueError(error: any, vm: any, info: string) {
+function vueError(error, vm, info) {
     const log = new Log(info, LogType.ErrorConsole);
     store.commit('appendLogs', {log, type: LogType.ErrorConsole});
 }
@@ -30,10 +30,10 @@ function vueError(error: any, vm: any, info: string) {
 function init() {
     window.console.log = consoleLog;
     window.onerror = consoleError;
-    const outerVue: any = store.state.outerVue;
+    const outerVue = store.state.outerVue;
     outerVue.config.errorHandler = vueError;
 }
 
-export default {
+module.exports = {
     init,
 };

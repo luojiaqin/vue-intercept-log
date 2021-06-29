@@ -50,9 +50,9 @@
   </div>
 </template>
 <script>
-import {LogType } from '@/core/log'
+import {LogType } from '@/lib/log'
 import { mapState } from 'vuex'
-import Box from './Box'
+import Box from './Box.vue'
 export default {
   created(){
     console.log('生命周期钩子创建')

@@ -1,21 +1,19 @@
 import store from '@/store';
 import { Log, LogType } from './log';
-enum EventName {
-    CLICK = 'click',
+const EventName =  {
+    CLICK: 'click',
 }
 class DOMEventLog extends Log {
-    public eventName: EventName;
-    public dom: EventTarget | null;
-    constructor(con: string, eventName: EventName, dom: EventTarget|null, logType: LogType = LogType.Event) {
+    constructor(con, eventName, dom, logType = LogType.EventLog) {
         super(con, logType);
         this.eventName = eventName;
         this.dom = dom;
     }
 }
 
-function clickHandle(event: MouseEvent) {
+function clickHandle(event) {
     const log = new DOMEventLog('元素事件触发', EventName.CLICK, event.target);
-    store.commit('appendLogs', {log, type: LogType.Event});
+    store.commit('appendLogs', {log, type: LogType.EventLog});
 }
 
 function init() {
@@ -23,6 +21,6 @@ function init() {
 }
 
 
-export default{
+module.exports = {
     init,
 };

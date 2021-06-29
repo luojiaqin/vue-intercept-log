@@ -1,46 +1,31 @@
 import store from '@/store';
 import { Log, LogType } from './log';
+
+
 class HttpRequest extends Log {
-    public request?: string;
-    public requestTime?: string;
-    public response?: string;
-    public responseTime?: string;
-    constructor(con: string, logType: LogType = LogType.HttpRequest) {
-        super(con, logType);
-    }
-    public setRequest(request: string) {
+    setRequest(request) {
         this.requestTime = new Date().toLocaleString();
         this.request = request;
     }
-    public setResponse(response: string) {
+    setResponse(response) {
         this.responseTime = new Date().toLocaleString();
         this.response = response;
     }
-    public setLogType(logType: LogType) {
+    setLogType(logType) {
         this.logType = logType;
     }
 
 }
-// class XMLHttp {
-//     request = function(param: any){
-//         console.log('请求内容',param)
-//     };
-//     response = function(response: any){
-//         console.log('响应内容',response)
-//     }
-// }
-
-
 function initXMLHttpRequest() {
     const open = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(...args: any) {
+    XMLHttpRequest.prototype.open = function(...args) {
         if (args[1].includes('/sockjs-node/info')) {
             return;
         }
         const httpLog = new HttpRequest('请求');
         const send = this.send;
         let _this = this;
-        let post_data: any[] = [];
+        let post_data = [];
         this.send = function(...data) {
             post_data = data;
             return send.apply(_this, data);
@@ -74,6 +59,6 @@ function initXMLHttpRequest() {
     };
 }
 
-export default {
+module.exports  = {
     init: initXMLHttpRequest,
 };
