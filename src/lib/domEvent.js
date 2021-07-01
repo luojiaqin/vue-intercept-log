@@ -22,7 +22,7 @@ function init() {
 }
 
 function destory(){
-    // document.removeEventListener('click',clickHandle, true)
+    store.outWindow.document.removeEventListener('click',clickHandle, true)
 }
 
 

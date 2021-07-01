@@ -22,7 +22,7 @@ function initXMLHttpRequest() {
         if (args[1].includes('/sockjs-node/info')) {
             return;
         }
-        const httpLog = new HttpRequest('请求');
+        const httpLog = new HttpRequest('请求',LogType.HttpRequest);
         const send = this.send;
         let _this = this;
         let post_data = [];
@@ -60,7 +60,7 @@ function initXMLHttpRequest() {
 }
 
 function destory(){
-    store.outWindow.XMLHttpRequest.prototype.open = store.outWindow.XMLHttpRequest.prototype.open
+    // store.outWindow.XMLHttpRequest.prototype.open = store.outWindow.XMLHttpRequest.prototype.open
 }
 
 module.exports  = {

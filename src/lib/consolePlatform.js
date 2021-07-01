@@ -6,11 +6,10 @@ function consoleLog() {
     
     if (arguments.length === 1) {
         const param = arguments[0]
-        console.warn(typeof param)
         if(typeof param === 'object'){
-            log = new Log(JSON.stringify(param))
+            log = new Log(JSON.stringify(param),LogType.Console)
         }else{
-            log = new Log(param)
+            log = new Log(param,LogType.Console)
         }
     } else {
     //     const contentGroup = [];
@@ -45,9 +44,9 @@ function init() {
 }
 
 function destory(){
-    store.outWindow.console.log = window.console.log
-    store.outWindow.onerror = window.onerror
-    store.outerVue.config.errorHandler = store.outerVue.config.errorHandler;
+    // store.outWindow.console.log = window.console.log
+    // store.outWindow.onerror = window.onerror
+    // store.outerVue.config.errorHandler = store.outerVue.config.errorHandler;
 }
 
 module.exports = {

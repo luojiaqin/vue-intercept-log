@@ -25,6 +25,7 @@
           <button>查看全部</button>
           {{item.createTime}}
           {{item.content || item.contentGroup}}
+          <label v-if="item.logType === LogType.HttpRequest || item.logType === LogType.ErrorHttpRequest">{{item.request.url}}</label>
           {{item.stack}}
           
         </div>
