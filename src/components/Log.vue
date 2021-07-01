@@ -2,93 +2,105 @@
   <div>
     <div class="fun-bar">
       <button class="btn restartbtn" @click="restart">重新开始</button>
-      <button class="btn stopbtn">停止记录</button>
-      <button class="btn consolebtn">console</button>
-      <button class="btn requestbtn">httpRequest</button>
-      <button class="btn clearbtn">清空</button>
-      <button class="btn downloadbtn">下载</button>
+      <button class="btn stopbtn" @click="stop">停止记录</button>
+      <button class="btn clearbtn" @click="clear">清空</button>
+      <button class="btn downloadbtn" @click="download">下载</button>
+
+      <button class="btn filterbtn" @click="filterLog('')">全部</button>
+      <button class="btn filterbtn" @click="filterLog(LogType.Console)">console</button>
+      <button class="btn filterbtn" @click="filterLog(LogType.ErrorConsole)">Errorconsole</button>
+      <button class="btn filterbtn" @click="filterLog(LogType.HttpRequest)">httpRequest</button>
+      <button class="btn filterbtn" @click="filterLog(LogType.ErrorHttpRequest)">ErrorHttpRequest</button>
+      <button class="btn filterbtn" @click="filterLog(LogType.EventLog)">Event</button>
+
+      <button class="btn closebtn" @click="closeDebug">关闭调试</button>
+      <button class="btn closebtn" @click="startDebug">启动调试</button>
     </div>
-    <div>
-      <div class="title">设备信息</div>
-    </div>
-    <Box title="正常打印日志">
-      <div class="item" v-for="(item,index) in consoleLog" :key="index">
-        {{item.createTime}}
-        内容：{{item.content || item.contentGroup}}
-      </div>
-    </Box>
-    <Box title="异常打印日志">
-      <div class="item" v-for="(item,index) in errorConsoleLog" :key="index">
-        {{item.createTime}}
-        内容：{{item.content || item.contentGroup}}
-      </div>
-    </Box>
-    <Box title="DOM日志">
-      <div class="item" v-for="(item,index) in eventLog" :key="index">
-        {{item.createTime}}
-        内容：{{item.content || item.contentGroup}}
-        事件名称：{{item.eventName}}
-        <button>查看dom元素</button>
-      </div>
-    </Box>
-    <Box title="正常请求">
-      <div class="item" v-for="(item,index) in HttpRequestLog" :key="index">
-        {{item.createTime}}
-        请求：{{item.requestTime}} {{item.request}}
-        <!-- 响应：{{item.responseTime}} {{item.response}} -->
-        <button>查看全部</button>
-      </div>
-    </Box>
-    <Box title="异常请求">
-      <div class="item" v-for="(item,index) in errorHttpRequestLog" :key="index">
-        {{item.createTime}}
-        请求：{{item.requestTime}} {{item.request}}
-        <!-- 响应：{{item.responseTime}} {{item.response}} -->
-        <button>查看全部</button>
-      </div>
-    </Box>
+    <section ref="logBody">
+      <Box title="设备信息">
+        设备名称{{navInfo.name}}
+      </Box>
+    <Box title="日志">
+        <div  v-for="(item,index) in logs" :class="['item',item.logType]" :key="index">
+          <button>查看全部</button>
+          {{item.createTime}}
+          {{item.content || item.contentGroup}}
+          {{item.stack}}
+          
+        </div>
+      </Box>
+    </section>
+    
   </div>
 </template>
 <script>
 import {LogType } from '../lib/log'
+const store = require('../store/index2')
 import Box from './Box.vue'
 export default {
-  created(){
-    console.log('生命周期钩子创建')
-  },
+  name: 'log',
   components: {
     Box
   },
   data(){
     return {
-      logs: require('../store/index2').logs
-    }
-  },
-  computed: {
-    consoleLog(){
-      return this.logs[LogType.Console]
-    },
-    errorConsoleLog(){
-      return this.logs[LogType.ErrorConsole]
-    },
-    HttpRequestLog(){
-      return this.logs[LogType.HttpRequest]
-    },
-    errorHttpRequestLog(){
-      return this.logs[LogType.ErrorHttpRequest]
-    },
-    eventLog(){
-      return this.logs[LogType.EventLog]
+      logs: store.logs,
+      navInfo: store.navigatorInfo,
+      LogType
     }
   },
   methods: {
+    filterLog(logType){
+      if(logType){
+        this.logs = store.logs.filter(log=>log.logType === logType)
+      }else{
+        this.logs = store.logs
+      }
+    },
     restart(){
-      console.log('重新开始')
-      this.test.name = 123
+      this.$interceptLog.clear()
+      this.$interceptLog.start()
+      
+    },
+    download(){
+      const el = this.$refs.logBody
+      this.$interceptLog.download(el)
+    },
+    stop(){
+      this.$interceptLog.stop()
+    },
+    clear(){
+      this.$interceptLog.clear()
+      this.$emit('click')
+    },
+    closeDebug(){
+
+    },
+    startDebug(){
+
     }
   }
 }
 </script>
 <style scoped>
-
+.console{
+  color: blue
+}
+.errorConsole{
+  color: red;
+}
+.event{
+  color: green;
+}
+.httpRequest{
+  color:yellow;
+}
+.errorHttpRequest{
+  color: red;
+}
+.item{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
 </style>

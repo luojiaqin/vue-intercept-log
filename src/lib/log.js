@@ -1,12 +1,14 @@
 class Log {
-    constructor(con, logType) {
-        this.createTime = new Date().toLocaleString();
+    constructor(con, logType,stack = null) {
+        const curTime = new Date()
+        this.createTime = curTime.getHours()+':'+curTime.getMinutes()+':'+curTime.getSeconds();
         this.logType = logType;
         if (typeof con === 'string') {
             this.content = con;
         } else {
             this.contentGroup = con;
         }
+        this.stack = stack
 
     }
 }

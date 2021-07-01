@@ -12,15 +12,21 @@ class DOMEventLog extends Log {
 }
 
 function clickHandle(event) {
-    const log = new DOMEventLog('元素事件触发', EventName.CLICK, event.target);
-    store.appendLogs({log, type: LogType.EventLog});
+    const log = new DOMEventLog('按钮点击', EventName.CLICK, event.target);
+    store.appendLogs(log);
+
 }
 
 function init() {
-    document.addEventListener('click', clickHandle);
+    store.outWindow.document.addEventListener('click',clickHandle, true)
+}
+
+function destory(){
+    // document.removeEventListener('click',clickHandle, true)
 }
 
 
 module.exports = {
     init,
+    destory
 };

@@ -19,10 +19,7 @@ export default {
   border-radius: 5px;
   padding: 20px;
   padding-top:0;
-  display: inline-block;
   text-align: left;
-  width: 45%;
-  height: 400px;
   margin-top: 15px;
   overflow: auto;
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       {{message}}
-      <vue-intercept-log></vue-intercept-log>
+      <vue-intercept-log @click="changeContent"></vue-intercept-log>
   </div>
 </template>
 
@@ -12,8 +12,10 @@ export default {
             message: 'please checkout the tool console'
         }
     },
-    created(){
-        console.log(123)
+    methods: {
+        changeContent(){
+            this.message = '123'
+        }
     }
 }
 </script>
