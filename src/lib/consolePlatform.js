@@ -12,12 +12,15 @@ function consoleLog() {
             log = new Log(param,LogType.Console)
         }
     } else {
-    //     const contentGroup = [];
-    //     for (let i = 0; i < arguments.length; i++) {
-    //         // contentGroup.push(JSON.stringify(arguments[i]));
-    //         contentGroup.push(arguments[i]);
-    //     }
-    //     log = new Log(contentGroup);
+        const contentGroup = [];
+        for (let i = 0; i < arguments.length; i++) {
+            let param = arguments[i]
+            if(typeof param === 'object'){
+                param = JSON.stringify(param)
+            }
+            contentGroup.push(param);
+        }
+        log = new Log(contentGroup,LogType.Console);
     }
     store.appendLogs(log);
 }

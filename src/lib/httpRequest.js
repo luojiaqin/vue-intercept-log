@@ -32,7 +32,7 @@ function initXMLHttpRequest() {
         };
 
         // 请求前拦截
-        httpLog.setRequest(JSON.stringify(args));
+        httpLog.setRequest(args);
 
         this.addEventListener('readystatechange', function() {
             if (this.readyState === 4) {
@@ -43,7 +43,7 @@ function initXMLHttpRequest() {
                     data: post_data,
                   };
                 // 请求后拦截
-                httpLog.setResponse(JSON.stringify({config, response: this.response}));
+                httpLog.setResponse({config, response: this.response});
                 if (this.status) {
                     store.appendLogs(httpLog);
                 } else {
