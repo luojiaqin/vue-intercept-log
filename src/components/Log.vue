@@ -26,9 +26,7 @@
           {{item.createTime}}
           {{item.content || item.contentGroup}}
           <label v-if="item.logType === LogType.HttpRequest || item.logType === LogType.ErrorHttpRequest">
-            {{item.request.status}}
-            {{item.request.method}}
-            {{item.request.url}}
+            {{item.request}}
             </label>
           {{item.stack}}
           
@@ -53,11 +51,6 @@ export default {
       navInfo: store.navigatorInfo,
       LogType
     }
-  },
-  created(){
-    console.log(1,4,5)
-    console.log(2)
-    console.log(3)
   },
   methods: {
     filterLog(logType){
