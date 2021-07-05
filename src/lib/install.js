@@ -17,7 +17,7 @@ const plugin = {
         this.init(vue,params);
     },
     init(vue,params) {
-        const {router, isDefaultRecord, outWindow} = params;
+        const {router, isDefaultRecord} = params;
         if(router){
             let {routePath} = params;
             routePath = routePath || '/vue-intercept-log';
@@ -27,11 +27,13 @@ const plugin = {
                 name: routePath,
                 component: () => import('../components/Log.vue'),
             }]);
+            store.outWindow = window.opener
         }else{
             const logComponent = require('../components/Log.vue')
             vue.component('vue-intercept-log', logComponent.default)
+            store.outWindow = window
         }
-        store.outWindow = outWindow || window
+       
         store.navigatorInfo = new Navigator(navigator.userAgent);
 
         if (isDefaultRecord) {
