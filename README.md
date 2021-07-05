@@ -1,39 +1,41 @@
 # vue-intercept-log
 
-## 使用方法
+## Install
 ```
 npm install vue-intercept-log
 ```
 
-## 功能（记录正式环境中不方便打印及调试时的调试日志）
+## Usage
+### - Setting
+```js
+// main.js
+import VueInterceptLog from 'vue-intercept-log'
+...
 
-* 拦截console正常异常打印
-* 拦截http正常异常请求
-* 监听按钮点击触发（未完成）
-* 增加vue-log查看实时日志页面
-* 存储在indexdb中（未完成）
-* 下载日志（未完成）
-* 读取当前环境配置
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
+Vue.use(VueInterceptLog,{
+    isDefaultRecord: true,
+    router: router,
+    routePath: '/vue-intercept-log'
+})
 ```
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Lints and fixes files
-```
-npm run lint
+### Using
+router not exit
+```js
+<vue-intercept-log />
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+router exit
+```js
+localhost:{port}/vue-intercept-log // routerPath not exit
+or
+localhost:{port}/{routePath} // routerPath exit
+```
+
+## Options
+
+| Key | Value | 类型 | 默认值 | 描述 | 是否必传 |
+| --- | --- | --- | --- | --- | --- |
+|isDefaultRecord|是否开始进行日志记录|Boolean|false|只有为true才开始记录| 否 |
+| router | 路由实例 | Router | 无 | 用于向当前添加日志路由 | 否 |
+| routePath | 路由path | String | 'vue-intercept-log' | 进入页面的路由访问路径 | 否 |
