@@ -47,9 +47,9 @@ function init() {
 }
 
 function destory(){
-    // store.outWindow.console.log = window.console.log
-    // store.outWindow.onerror = window.onerror
-    // store.outerVue.config.errorHandler = store.outerVue.config.errorHandler;
+    store.outWindow.console.log = window.console.log
+    store.outWindow.onerror = window.onerror
+    store.outerVue.config.errorHandler = store.outerVue.config.errorHandler;
 }
 
 module.exports = {

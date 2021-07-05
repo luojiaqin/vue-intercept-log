@@ -18,7 +18,7 @@ class HttpRequest extends Log {
 }
 function initXMLHttpRequest() {
     const open = store.outWindow.XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(...args) {
+    store.outWindow.XMLHttpRequest.prototype.open = function(...args) {
         if (args[1].includes('/sockjs-node/info')) {
             return;
         }
@@ -44,7 +44,7 @@ function initXMLHttpRequest() {
                   };
                 // 请求后拦截
                 httpLog.setResponse({config, response: this.response});
-                if (this.status) {
+                if (this.status === 200) {
                     store.appendLogs(httpLog);
                 } else {
                     httpLog.setLogType(LogType.ErrorHttpRequest);
@@ -55,12 +55,17 @@ function initXMLHttpRequest() {
             }
 
         }, false);
+
+        this.addEventListener('error', function(){
+            httpLog.setLogType(LogType.ErrorHttpRequest);
+            store.appendLogs(httpLog);
+        })
         return open.apply(this, args);
     };
 }
 
 function destory(){
-    // store.outWindow.XMLHttpRequest.prototype.open = store.outWindow.XMLHttpRequest.prototype.open
+    store.outWindow.XMLHttpRequest.prototype.open = store.outWindow.XMLHttpRequest.prototype.open
 }
 
 module.exports  = {

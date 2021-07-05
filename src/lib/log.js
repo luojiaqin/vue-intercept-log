@@ -3,7 +3,7 @@ class Log {
         const curTime = new Date()
         this.createTime = curTime.getHours()+':'+curTime.getMinutes()+':'+curTime.getSeconds();
         this.logType = logType;
-        if (typeof con === 'string') {
+        if (typeof con !== 'object') {
             this.content = con;
         } else {
             this.contentGroup = con;
