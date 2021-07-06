@@ -1,6 +1,6 @@
 {
   "name": "vue-intercept-log",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/devApp/server.js",

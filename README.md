@@ -39,11 +39,8 @@ router not exit
 ```
 
 router exit
-```js
-localhost:{port}/vue-intercept-log // routerPath not exit
-or
-localhost:{port}/{routePath} // routerPath exit
-```
+
+直接将当前地址栏的路由名称改为传如的routePath或'vue-intercept-log'
 
 ## 选项
 

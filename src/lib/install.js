@@ -19,9 +19,15 @@ const plugin = {
     init(vue,params) {
         const {router, isDefaultRecord} = params;
         if(router){
+            
             let {routePath} = params;
             routePath = routePath || '/vue-intercept-log';
             //  routePath ??= '/vue-log';
+            if(!window.opener){
+                const {href} = router.resolve(routePath)
+                window.open(href)
+                return
+            }
             router.addRoutes([{
                 path: routePath,
                 name: routePath,
