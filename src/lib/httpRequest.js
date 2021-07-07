@@ -32,18 +32,17 @@ function initXMLHttpRequest() {
         };
 
         // 请求前拦截
-        httpLog.setRequest(args);
+        httpLog.setRequest({
+            method: args[0],
+            url: args[1],
+            isAsync: args[2],
+            sendData: post_data
+        });
 
         this.addEventListener('readystatechange', function() {
             if (this.readyState === 4) {
-                const config = {
-                    url: args[1],
-                    status: this.status,
-                    method: args[0],
-                    data: post_data,
-                  };
                 // 请求后拦截
-                httpLog.setResponse({config, response: this.response});
+                httpLog.setResponse({status: this.status, response: this.response});
                 if (this.status === 200) {
                     store.appendLogs(httpLog);
                 } else {

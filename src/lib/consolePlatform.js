@@ -6,27 +6,14 @@ function consoleLog() {
     
     if (arguments.length === 1) {
         const param = arguments[0]
-        if(typeof param === 'object'){
-            log = new Log(JSON.stringify(param),LogType.Console)
-        }else{
-            log = new Log(param,LogType.Console)
-        }
+        log = new Log(param,LogType.Console)
     } else {
-        const contentGroup = [];
-        for (let i = 0; i < arguments.length; i++) {
-            let param = arguments[i]
-            if(typeof param === 'object'){
-                param = JSON.stringify(param)
-            }
-            contentGroup.push(param);
-        }
-        log = new Log(contentGroup,LogType.Console);
+        log = new Log(arguments,LogType.Console);
     }
     store.appendLogs(log);
 }
 
 function consoleError(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-        // console.log(errorMessage, scriptURI, lineNumber, columnNumber, errorObj)
         const log = new Log(errorMessage, LogType.ErrorConsole);
         store.appendLogs(log);
 }

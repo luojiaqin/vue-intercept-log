@@ -5,7 +5,6 @@ const httpRequest = require('./httpRequest');
 const Navigator = require('./navigator')
 const plugin = {
     install(vue, params) {
-        console.log(params)
         store.outerVue = vue;
         vue.prototype.$interceptLog = {
             start: this.start,
@@ -74,3 +73,4 @@ const plugin = {
 // }
 
 module.exports =  plugin;
+

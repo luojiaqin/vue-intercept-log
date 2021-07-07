@@ -22,11 +22,7 @@ describe('httpRequest.js ', ()=>{
             const httpLog = store.logs[0]
             expect(httpLog).to.not.equal(undefined)
             expect(httpLog.logType).to.equal(LogType.HttpRequest)
-            expect(httpLog.response.config).to.include({
-                url: 'https://api.apiopen.top/getWangYiNews',
-                method: 'POST',
-                status: 200
-            })
+            expect(httpLog.response.status).to.equal(200)
 
             done()
         }
@@ -43,11 +39,7 @@ describe('httpRequest.js ', ()=>{
             const httpLog = store.logs[0]
             expect(httpLog).to.not.equal(undefined)
             expect(httpLog.logType).to.equal(LogType.ErrorHttpRequest)
-            expect(httpLog.response.config).to.include({
-                url: 'https://api.apiopen.top/getWangYiNew',
-                method: 'POST',
-            })
-            expect(httpLog.response.config.status).to.not.equal(200)
+            expect(httpLog.response.status).to.not.equal(200)
             done()
         }
     })

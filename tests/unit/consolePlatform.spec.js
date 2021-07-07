@@ -23,14 +23,14 @@ describe('consolePlatform.js', () => {
     store.logs = []
     const obj = {name: 'ljq'}
     window.console.log(1, obj)
-    expect(store.logs[0].contentGroup).to.deep.equal([1, JSON.stringify(obj)]);
+    expect(store.logs[0].content).to.deep.include([1,obj]);
   });
 
   it('get console Log when console.log 对象', ()=>{
     store.logs = []
     const obj = {name: 'ljq'}
     window.console.log(obj)
-    expect(store.logs[0].content).to.equal(JSON.stringify(obj))
+    expect(store.logs[0].content).to.equal(obj)
   })
 
   // ? 错误信息捕捉

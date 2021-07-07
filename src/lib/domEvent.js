@@ -12,7 +12,12 @@ class DOMEventLog extends Log {
 }
 
 function clickHandle(event) {
-    const log = new DOMEventLog('按钮点击', EventName.CLICK, event.target);
+    const target = event.target
+    let str = target.nodeName+target.id+target.classList
+    if(target.innerText && target.innerText.length<20){
+        str+=target.innerText
+    }
+    const log = new DOMEventLog('按钮点击:'+str, EventName.CLICK, event.target);
     store.appendLogs(log);
 
 }

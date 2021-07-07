@@ -11,6 +11,8 @@ describe('domEvent.js', () => {
     it('listen dom click', ()=>{
         store.logs = []
         window.document.querySelector('p').click()
-        expect(store.logs[0].content).to.equal('按钮点击')
+        const log = store.logs[0]
+        expect(log).to.not.equal(undefined)
+        expect(log.content).to.include('按钮点击')
     })
 })
