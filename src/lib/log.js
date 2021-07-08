@@ -5,7 +5,6 @@ class Log {
         this.logType = logType;
         this.content = con;
         this.stack = stack
-
     }
 }
 

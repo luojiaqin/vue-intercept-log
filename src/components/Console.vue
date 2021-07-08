@@ -4,7 +4,7 @@
       <template v-if="isObject(conData)">
           <div v-for="name in keys" :key="name" :style="{'text-indent': depth*15+'px'}">
 
-            <div v-if="isBasic(conData[name])">{{name}}:{{conData[name]}}</div>
+            <div v-if="isBasic(conData[name])">{{name}}:{{conData[name] | filterString}}</div>
 
             <div v-else class="item">
                 <div>{{name}}:{{conData[name].constructor.name}}</div>
@@ -45,11 +45,16 @@ export default {
             return Object.keys(this.conData)
         }
     },
-
+    filters: {
+        filterString(val){
+            if(typeof val === 'string'){
+                return `"${val}"`
+            }else{
+                return val
+            }
+        }
+    },
     methods: {
-        getConstr(){
-
-        },
         isObject(value){
             return value.constructor === Object
         },
@@ -57,8 +62,8 @@ export default {
             return value.constructor === Array
         },
         isBasic(val){
-            const typeArr = ['string','number','null','undefined','boolean','symbol']
-            return typeArr.includes(typeof val)
+            const typeArr = ['string','number','undefined','boolean','symbol']
+            return typeArr.includes(typeof val) || val === null
         }
     }
 

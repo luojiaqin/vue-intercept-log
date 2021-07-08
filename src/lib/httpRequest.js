@@ -1,6 +1,11 @@
 const store = require('../store/index2');
 const { Log, LogType } = require('./log');
 
+function stackTrace(){
+    const obj = {}
+    store.outWindow.Error.captureStackTrace(obj)
+    return obj.stack
+}
 
 class HttpRequest extends Log {
     setRequest(request) {
@@ -22,7 +27,7 @@ function initXMLHttpRequest() {
         if (args[1].includes('/sockjs-node/info')) {
             return;
         }
-        const httpLog = new HttpRequest('请求',LogType.HttpRequest);
+        const httpLog = new HttpRequest('请求',LogType.HttpRequest,stackTrace());
         const send = this.send;
         let _this = this;
         let post_data = [];

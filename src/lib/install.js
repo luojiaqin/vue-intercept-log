@@ -21,12 +21,12 @@ const plugin = {
             
             let {routePath} = params;
             routePath = routePath || '/vue-intercept-log';
-            //  routePath ??= '/vue-log';
-            if(!window.opener){
-                const {href} = router.resolve(routePath)
-                window.open(href)
-                return
-            }
+            // //  routePath ??= '/vue-log';
+            // if(!window.opener){
+            //     const {href} = router.resolve(routePath)
+            //     window.open(href)
+            //     return
+            // }
             router.addRoutes([{
                 path: routePath,
                 name: routePath,
@@ -65,11 +65,17 @@ const plugin = {
         aLink.setAttribute('download','日志.txt')
         aLink.style.display = 'none'
         aLink.click()
+    },
+    closeDebug(){
+        this.stop()
+        if(store.router){
+            window.close()
+        }
     }
 };
 
 // if(typeof window !== 'undefined' && window.Vue){
-    // plugin.install(window.Vue)
+//     plugin.install(window.Vue)
 // }
 
 module.exports =  plugin;

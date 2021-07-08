@@ -14,7 +14,6 @@
       <button class="btn filterbtn" @click="filterLog(LogType.EventLog)">Event</button>
 
       <button class="btn closebtn" @click="closeDebug">关闭调试</button>
-      <button class="btn launchbtn" @click="startDebug">启动调试</button>
     </div>
     <section :class="{blur:showMc}" ref="logBody">
       <Box title="设备信息">
@@ -28,14 +27,13 @@
           <label v-if="item.logType === LogType.HttpRequest || item.logType === LogType.ErrorHttpRequest">
             {{item.request}}
             </label>
-          {{item.stack}}
           
         </div>
       </Box>
       
     </section>
-    <div v-if="showMc" class="mc" @click="showMc = false">
-        <Box :title="currentLog.logType" class="mc-box">
+    <div v-if="showMc" class="mc">
+        <Box :title="currentLog.logType" class="mc-box" close @close="showMc = false">
           <div class="mc-body" v-if="currentLog.logType === LogType.EventLog">
             <div class="mc-item" label="触发时间：">{{currentLog.createTime}}</div>
             <div class="mc-item" label="事件触发方式：">点击</div>
@@ -53,11 +51,15 @@
             <div class="mc-item" label="响应时间：">{{currentLog.responseTime}}</div>
             <div class="mc-item" label="响应状态：">{{currentLog.response.status}}</div>
             <div class="mc-item" label="响应数据：">{{currentLog.response.response}}</div>
+            <div class="mc-item" label="请求占：">{{currentLog.stack}}</div>
           </div>
           <div class="mc-body" v-if="currentLog.logType === LogType.Console || currentLog.logType === LogType.ErrorConsole">
             <div class="mc-item" label="触发时间：">{{currentLog.createTime}}</div>
             <div class="mc-item" label="打印内容：">{{currentLog}}</div>
-            <Console :conData="currentLog.content"></Console>
+            <div class="mc-item" label="数据格式：" v-if="!isBasicType(currentLog.content)">
+              <Console :conData="currentLog.content"></Console>
+            </div>
+            <div class="mc-item" label="打印栈：">{{currentLog.stack}}</div>
           </div>
         </Box>
       </div>
@@ -68,6 +70,7 @@ import {LogType } from '../lib/log'
 const store = require('../store/index2')
 import Box from './Box.vue'
 import Console from './Console.vue'
+import {isBasicType} from '../utils/typeof'
 export default {
   name: 'log',
   components: {
@@ -80,10 +83,32 @@ export default {
       navInfo: store.navigatorInfo,
       LogType,
       showMc: false,
-      currentLog: {}
+      currentLog: {},
+      conData: [{
+        name: 'ljq',
+        age: 12,
+        text: null
+      },{
+        name: 'cww',
+        age: 11,
+        text: null
+      }]
     }
   },
+  beforeRouteEnter(to, from, next){
+    if(!window.opener){
+        const {href} = store.router.resolve(routePath)
+        window.open(href)
+        next(false)
+    }else{
+      next()
+    }
+  },
+  created(){
+    console.log(this.conData)
+  },
   methods: {
+    isBasicType,
     filterLog(logType){
       if(logType){
         this.logs = store.logs.filter(log=>log.logType === logType)
@@ -119,10 +144,7 @@ export default {
       this.$emit('click')
     },
     closeDebug(){
-      this.$interceptLog.stop()
-    },
-    startDebug(){
-
+      this.$interceptLog.closeDebug()
     }
   }
 }
@@ -159,15 +181,15 @@ export default {
 }
 .mc{
   position: fixed;
-  top: 200px;
+  top: 100px;
   left: 0;
   right: 0;
+  height: 80%;
   display: flex;
   justify-content: center;
 }
 .mc-box{
-  width: 500px;
-  height: 60%;
+  width: 800px;
   background: #fff;
 }
 .blur{

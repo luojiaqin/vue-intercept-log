@@ -1,27 +1,33 @@
 const { Log, LogType } = require('./log');
 const store = require('../store/index2');
 
+function stackTrace(){
+    const obj = {}
+    store.outWindow.Error.captureStackTrace(obj)
+    return obj.stack
+}
+
 function consoleLog() {
     let log = null;
     
     if (arguments.length === 1) {
         const param = arguments[0]
-        log = new Log(param,LogType.Console)
+        log = new Log(param,LogType.Console, stackTrace())
     } else {
-        log = new Log(arguments,LogType.Console);
+        log = new Log(arguments,LogType.Console,stackTrace());
     }
     store.appendLogs(log);
 }
 
 function consoleError(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-        const log = new Log(errorMessage, LogType.ErrorConsole);
+        const log = new Log(errorMessage, LogType.ErrorConsole, stackTrace());
         store.appendLogs(log);
 }
 
 
 function vueError(error, vm, info) {
     const errorMsg = `提示:${info},信息：${error.name}${error.message}`
-    const log = new Log(errorMsg, LogType.ErrorConsole, error.stack);
+    const log = new Log(errorMsg, LogType.ErrorConsole, error.stack,stackTrace());
     store.appendLogs(log);
     
 }
