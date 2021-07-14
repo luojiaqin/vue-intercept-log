@@ -28,7 +28,10 @@ module.exports = {
         },{
             exclude: /src/,
             use: {
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                options: {
+                    plugins: ["@babel/plugin-transform-runtime"]
+                }
             }
         }]
     }

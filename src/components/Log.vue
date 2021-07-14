@@ -20,10 +20,10 @@
         设备名称{{navInfo.name}}
       </Box>
       <Box title="日志">
-        <div  v-for="(item,index) in logs" :class="['item',item.logType]" :key="index">
+        <div v-for="(item,index) in logs" :class="['item',item.logType]" :key="index">
           <button @click="showAll(item)">查看全部</button>
           {{item.createTime}}
-          {{item.content || item.contentGroup}}
+          {{item.content}}
           <label v-if="item.logType === LogType.HttpRequest || item.logType === LogType.ErrorHttpRequest">
             {{item.request}}
             </label>
@@ -51,11 +51,11 @@
             <div class="mc-item" label="响应时间：">{{currentLog.responseTime}}</div>
             <div class="mc-item" label="响应状态：">{{currentLog.response.status}}</div>
             <div class="mc-item" label="响应数据：">{{currentLog.response.response}}</div>
-            <div class="mc-item" label="请求占：">{{currentLog.stack}}</div>
+            <div class="mc-item" label="请求栈：">{{currentLog.stack}}</div>
           </div>
           <div class="mc-body" v-if="currentLog.logType === LogType.Console || currentLog.logType === LogType.ErrorConsole">
             <div class="mc-item" label="触发时间：">{{currentLog.createTime}}</div>
-            <div class="mc-item" label="打印内容：">{{currentLog}}</div>
+            <div class="mc-item" label="打印内容：">{{currentLog.content}}</div>
             <div class="mc-item" label="数据格式：" v-if="!isBasicType(currentLog.content)">
               <Console :conData="currentLog.content"></Console>
             </div>

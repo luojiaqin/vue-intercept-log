@@ -42,6 +42,7 @@ const plugin = {
         store.navigatorInfo = new Navigator(navigator.userAgent);
 
         if (isDefaultRecord) {
+            consolePlatform.recordOldBindfn()
             this.start();
         }
     },

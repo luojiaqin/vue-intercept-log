@@ -2,7 +2,7 @@ const { LogType } = require('../lib/log');
 
 const store = {
   outerVue: {},
-  outWindow: {},
+  outWindow: window,
   router: {},
   logs: [],
   navigatorInfo: {},

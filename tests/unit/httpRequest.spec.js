@@ -1,15 +1,11 @@
 const chai = require('chai')
 const expect = chai.expect
-const { JSDOM } = require('jsdom')
-const { window } = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`)
 const store = require('../../src/store/index2')
 const httpRequest = require('../../src/lib/httpRequest')
 const { LogType, Log } = require('../../src/lib/log')
 
 
 describe('httpRequest.js ', ()=>{
-    store.outWindow = window
-    
     httpRequest.init()
 
     it('normal httpRequest',(done)=>{

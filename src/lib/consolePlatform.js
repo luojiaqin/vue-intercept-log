@@ -1,10 +1,15 @@
 const { Log, LogType } = require('./log');
 const store = require('../store/index2');
 
+let oldConsoleFn = null
+let oldErrorFn = null
+let oldVueErrorFn = null
+
 function stackTrace(){
-    const obj = {}
-    store.outWindow.Error.captureStackTrace(obj)
-    return obj.stack
+    // const obj = {}
+    // store.outWindow.Error.captureStackTrace(obj)
+    // return obj.stack
+    return true
 }
 
 function consoleLog() {
@@ -31,21 +36,32 @@ function vueError(error, vm, info) {
     store.appendLogs(log);
     
 }
-
+function recordOldBindfn(){
+    oldConsoleFn = store.outWindow.console.log
+    oldErrorFn = store.outWindow.onerror
+    oldVueErrorFn = store.outerVue.config.errorHandler
+}
 
 function init() {
     store.outWindow.console.log = consoleLog;
-    store.outWindow.onerror = consoleError;
-    store.outerVue.config.errorHandler = vueError;
+    // store.outWindow.onerror = consoleError;
+    // store.outerVue.config.errorHandler = vueError;
 }
 
 function destory(){
-    store.outWindow.console.log = window.console.log
-    store.outWindow.onerror = window.onerror
-    store.outerVue.config.errorHandler = store.outerVue.config.errorHandler;
+    if(oldConsoleFn){
+        store.outWindow.console.log = oldConsoleFn
+    }
+    if(oldErrorFn){
+        store.outWindow.onerror = window.onerror
+    }
+    if(oldVueErrorFn){
+        store.outerVue.config.errorHandler = store.outerVue.config.errorHandler;
+    }
 }
 
 module.exports = {
     init,
-    destory
+    destory,
+    recordOldBindfn
 };

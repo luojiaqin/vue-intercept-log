@@ -1,15 +1,12 @@
-const { expect } = require('chai');
-const { JSDOM } = require('jsdom')
-const {window} = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`)
 
 const consolePlatform = require('../../src/lib/consolePlatform.js')
 const store = require('../../src/store/index2.js')
 const { LogType } = require('../../src/lib/log')
-const Vue = require('vue')
+import Vue from 'vue'
 
 describe('consolePlatform.js', () => {
-  store.outWindow = window
   store.outerVue = Vue
+  store.outWindow = window
   consolePlatform.init()
 
   it('get console Log when console.log 基础类型', () => {
@@ -36,8 +33,8 @@ describe('consolePlatform.js', () => {
   // ? 错误信息捕捉
   // it('get console Log when error', ()=>{
   //   store.logs = []
-  //   window.console.error('this is an error');
-  //   // window.Error('this is an error')
+  //   //  window.eval(window.ljq.name.test = 123)
+  //   expect(store.logs[0]).to.not.equal(undefined)
   //   expect(store.logs[0].content).to.equal('this is an error')
   //   expect(store.logs[0].logType).to.equal(LogType.ErrorConsole)
   // })
